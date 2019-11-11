@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace QuizApp.Infrastructure.Migrations
@@ -47,19 +48,22 @@ namespace QuizApp.Infrastructure.Migrations
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
+
             migrationBuilder.CreateTable(
-                name: "Questions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    QuestionType = table.Column<string>(nullable: true),
-                    Prompt = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Questions", x => x.Id);
-                });
+             name: "Questions",
+             columns: table => new
+             {
+                 Id = table.Column<int>(nullable: false)
+                     // ADD THIS LINE: tell SQL Server to use an "identity" (auto-increment) column for id
+                     .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
+                     .Annotation("Sqlite:Autoincrement", true),
+                 QuestionType = table.Column<string>(nullable: true),
+                 Prompt = table.Column<string>(nullable: true)
+             },
+             constraints: table =>
+             {
+                 table.PrimaryKey("PK_Questions", x => x.Id);
+             });
 
             migrationBuilder.CreateTable(
                 name: "Quizzes",
@@ -81,7 +85,9 @@ namespace QuizApp.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        //.Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -187,7 +193,10 @@ namespace QuizApp.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+
+                    .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+
+                        //.Annotation("Sqlite:Autoincrement", true),
                     Content = table.Column<string>(nullable: true),
                     IsCorrect = table.Column<bool>(nullable: false),
                     QuestionId = table.Column<int>(nullable: false)

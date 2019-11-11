@@ -17,4 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\QuizApp.Core\QuizApp.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Migrations\20190727012104_initial.cs" />
+  </ItemGroup>
 </Project>
